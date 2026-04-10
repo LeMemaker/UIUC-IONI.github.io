@@ -486,6 +486,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--csv", default="data.csv", help="Path to simulation CSV file")
     parser.add_argument("--host", default="127.0.0.1", help="Host interface to bind")
     parser.add_argument("--port", default=8080, type=int, help="Port to serve the app")
+    parser.add_argument("--export", help="Export to static HTML file path")
     parser.add_argument("--open-browser", action="store_true", help="Open browser on start")
     return parser.parse_args()
 
@@ -493,6 +494,14 @@ def _parse_args() -> argparse.Namespace:
 def main() -> None:
     args = _parse_args()
     server = build_app(args.csv)
+
+    if args.export:
+        from trame.tools import export
+
+        export.export_html(server, args.export)
+        print(f"Exported to {args.export}")
+        return
+
     env_port = os.getenv("PORT")
     port = int(env_port) if env_port else args.port
 
