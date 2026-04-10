@@ -488,8 +488,15 @@ def _parse_args() -> argparse.Namespace:
 def main() -> None:
     args = _parse_args()
     server = build_app(args.csv)
-    port = int(os.getenv("PORT", args.port))
-    server.start(host=args.host, port=port, open_browser=args.open_browser)
+    env_port = os.getenv("PORT")
+    port = int(env_port) if env_port else args.port
+
+    # Managed platforms (like Render) require listening on 0.0.0.0.
+    host = args.host
+    if env_port and args.host == "127.0.0.1":
+        host = "0.0.0.0"
+
+    server.start(host=host, port=port, open_browser=args.open_browser)
 
 
 if __name__ == "__main__":
