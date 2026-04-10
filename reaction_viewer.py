@@ -306,6 +306,11 @@ def build_app(csv_path: str | Path = "data.csv"):
     state = server.state
     ctrl = server.controller
 
+    # Browser tab branding.
+    state.trame__title = "IONI"
+    if logo_data_uri:
+        state.trame__favicon = logo_data_uri
+
     state.frame = 0
     state.frame_max = len(data.times) - 1
     state.playing = False
@@ -370,7 +375,7 @@ def build_app(csv_path: str | Path = "data.csv"):
             if logo_data_uri:
                 html.Img(
                     src=logo_data_uri,
-                    style="height: 80px; width: auto;margin-left: 10px; margin-right: 10px; object-fit: contain;",
+                    style="height: 69px; width: auto;margin-left: 10px; margin-right: 10px; object-fit: contain;",
                 )
             html.Span("Plasma Reaction Viewer", style="font-size: 1.1rem; font-weight: 600; margin-right: 14px;")
 
