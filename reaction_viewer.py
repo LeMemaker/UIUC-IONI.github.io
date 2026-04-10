@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import base64
 import csv
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict
@@ -487,7 +488,8 @@ def _parse_args() -> argparse.Namespace:
 def main() -> None:
     args = _parse_args()
     server = build_app(args.csv)
-    server.start(host=args.host, port=args.port, open_browser=args.open_browser)
+    port = int(os.getenv("PORT", args.port))
+    server.start(host=args.host, port=port, open_browser=args.open_browser)
 
 
 if __name__ == "__main__":
