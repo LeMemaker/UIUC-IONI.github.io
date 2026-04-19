@@ -1,0 +1,11 @@
+trame:
+  cmd:
+    - python
+    - /deploy/reaction_viewer.py
+    - --host
+    - ${host}
+    - --port
+    - ${port}
+    - --authKey
+    - ${secret}
+    - --server
